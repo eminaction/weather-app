@@ -36,9 +36,12 @@ function SearchBar() {
       speed: number;
       deg: number;
     };
-    // rain: {
-    //   1h: number;
-    // }
+    clouds: {
+      all: number;
+    };
+    rain: {
+      "1h": number;
+    };
   }
 
   const {
@@ -57,9 +60,9 @@ function SearchBar() {
   console.log(weatherData);
 
   //Function to update the city state when the user types
-  // const handleInputChange = (event) => {
-  //   setCity(event.target.value);
-  // }; // re-reders after every letter entered
+  const handleInputChange = (event) => {
+    setCity(event.target.value);
+  }; // re-reders after every letter entered
 
   // AI prompted this:
 
@@ -71,27 +74,45 @@ function SearchBar() {
         <input
           type="text"
           value={city} // Connect input to the state
-          // onChange={handleInputChange} // Listen for changes
+          onChange={handleInputChange} // Listen for changes
           placeholder="Enter City ..."
         />
         <button type="submit">Search</button>
       </div>
       <div className="current-weather">
-        <h4>{city}</h4>
+        <h4>{city.toUpperCase()}</h4>
         <div className="weather-data">
           <div className="temp">
             <h5>Temp °C</h5>
             <h3>
-              {weatherData ? Math.round(weatherData.main.temp - 273.15) : null}
+              {weatherData && weatherData.main
+                ? Math.round(weatherData.main.temp - 273.15)
+                : null}
             </h3>
           </div>
-          <div className="wind">
-            <h5>Wind m/s</h5>
-            <h3>{weatherData ? weatherData.wind.speed : null}</h3>
+          <div className="feels-like">
+            <h5>Feels Like °C</h5>
+            <h3>
+              {weatherData && weatherData.main
+                ? Math.round(weatherData.main.feels_like - 273.15)
+                : null}
+            </h3>
           </div>
+
+          <div className="cloud">
+            <h5>Cloud %</h5>
+            <h3>
+              {weatherData && weatherData.clouds
+                ? weatherData.clouds.all
+                : null}
+            </h3>
+          </div>
+
           <div className="rain">
             <h5>Rain mm</h5>
-            <h3>{/* {weatherData ? weatherData.rain.1h : null} */}</h3>
+            <h3>
+              {weatherData && weatherData.rain ? weatherData.rain["1h"] : 0}
+            </h3>
           </div>
         </div>
       </div>

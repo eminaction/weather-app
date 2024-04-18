@@ -15,10 +15,10 @@
   color: white;
   background-color: rgb(49, 49, 49);
 }
-
+/* 
 ::placeholder {
   color: white;
-}
+} */
 
 .searchbar button {
   float: right;
@@ -45,6 +45,10 @@
 }
 
 .current-weather h5 {
+  padding-top: 30px;
+  margin-bottom: 0;
+}
+.current-weather h4 {
   padding-top: 30px;
   margin-bottom: 0;
 }

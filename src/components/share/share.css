@@ -1,0 +1,12 @@
+.share {
+  background-color: rgba(255, 255, 255, 0.87);
+  width: 150px;
+  margin: 0 auto;
+  height: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.share h6 {
+  color: rgb(49, 49, 49);
+  padding-top: 8px;
+}

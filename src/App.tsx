@@ -7,6 +7,7 @@ import Header from "./components/header/header";
 import SearchBar from "./components/searchbar/searchbar.tsx";
 // import Results from "./components/results/results";
 import Footer from "./components/footer/footer";
+import Share from "./components/share/share.tsx";
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
       <>
         <SearchBar />
       </>
+
       <Footer />
+      <Share />
     </>
   );
 }
