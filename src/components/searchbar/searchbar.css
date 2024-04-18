@@ -1,7 +1,8 @@
 .searchbar {
-  border: 1px solid black;
+  border: 1px solid rgba(255, 255, 255, 0.87);
   height: 30px;
   border-radius: 10px;
+  color: white;
 }
 .searchbar input {
   border: 0px;
@@ -11,22 +12,45 @@
   margin-top: 2px;
   margin-left: 5px;
   width: 300px;
+  color: white;
+  background-color: rgb(49, 49, 49);
 }
+
+::placeholder {
+  color: white;
+}
+
 .searchbar button {
   float: right;
   height: 30px;
-  margin: 0;
+  margin-right: 5px;
   padding: 5px;
   font-size: 12px;
-  background-color: white;
+  color: white;
+  background-color: rgb(49, 49, 49);
+  border: 0px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 .current-weather {
   height: 200px;
-  background-color: rgb(66, 65, 65);
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(11, 127, 177),
+    rgb(98, 206, 243)
+  );
   color: white;
   margin-top: 20px;
   border-radius: 10px;
 }
-.current-weather h3 {
+
+.current-weather h5 {
   padding-top: 30px;
+  margin-bottom: 0;
+}
+
+.weather-data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }

@@ -31,6 +31,14 @@ function SearchBar() {
       pressure: number;
       humidity: number;
     };
+    visibility: number;
+    wind: {
+      speed: number;
+      deg: number;
+    };
+    // rain: {
+    //   1h: number;
+    // }
   }
 
   const {
@@ -48,10 +56,10 @@ function SearchBar() {
 
   console.log(weatherData);
 
-  // Function to update the city state when the user types
-  const handleInputChange = (event) => {
-    setCity(event.target.value);
-  }; // re-reders after every letter entered
+  //Function to update the city state when the user types
+  // const handleInputChange = (event) => {
+  //   setCity(event.target.value);
+  // }; // re-reders after every letter entered
 
   // AI prompted this:
 
@@ -63,18 +71,29 @@ function SearchBar() {
         <input
           type="text"
           value={city} // Connect input to the state
-          onChange={handleInputChange} // Listen for changes
-          placeholder="Enter City"
+          // onChange={handleInputChange} // Listen for changes
+          placeholder="Enter City ..."
         />
         <button type="submit">Search</button>
       </div>
       <div className="current-weather">
-        <h3>
-          Weather for ... <br /> {city}
-        </h3>
-        <p>
-          {weatherData ? Math.round(weatherData.main.temp - 273.15) : null}°C
-        </p>
+        <h4>{city}</h4>
+        <div className="weather-data">
+          <div className="temp">
+            <h5>Temp °C</h5>
+            <h3>
+              {weatherData ? Math.round(weatherData.main.temp - 273.15) : null}
+            </h3>
+          </div>
+          <div className="wind">
+            <h5>Wind m/s</h5>
+            <h3>{weatherData ? weatherData.wind.speed : null}</h3>
+          </div>
+          <div className="rain">
+            <h5>Rain mm</h5>
+            <h3>{/* {weatherData ? weatherData.rain.1h : null} */}</h3>
+          </div>
+        </div>
       </div>
     </div>
   );
