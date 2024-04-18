@@ -1,0 +1,32 @@
+.searchbar {
+  border: 1px solid black;
+  height: 30px;
+  border-radius: 10px;
+}
+.searchbar input {
+  border: 0px;
+  float: left;
+  font-size: 13px;
+  padding-top: 5px;
+  margin-top: 2px;
+  margin-left: 5px;
+  width: 300px;
+}
+.searchbar button {
+  float: right;
+  height: 30px;
+  margin: 0;
+  padding: 5px;
+  font-size: 12px;
+  background-color: white;
+}
+.current-weather {
+  height: 200px;
+  background-color: rgb(66, 65, 65);
+  color: white;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+.current-weather h3 {
+  padding-top: 30px;
+}
