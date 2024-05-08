@@ -7,10 +7,6 @@ import useSWR from "swr";
 // Fetcher function
 
 function SearchBar() {
-  const [city, setCity] = useState<string>(""); // State to hold what the user types
-
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
   interface WeatherData {
     coord: {
       lon: number;
@@ -43,31 +39,115 @@ function SearchBar() {
       "1h": number;
     };
   }
+  // //Function to update the city state when the user types
+  // const handleInputChange = (event) => {
+  //   setCity(event.target.value);
+  // };
+
+  // function backendCall(city: string) {
+  //   const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  //   const {
+  //     data: weatherData,
+  //     error,
+  //     isLoading,
+  //   } = useSWR<WeatherData | null>(
+  //     city
+  //       ? `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=654bfe91a3b12d5b95bbb8bec98174ae`
+  //       : null,
+  //     fetcher
+  //   );
+  //   if (error) return <div>failed to load</div>;
+  //   if (isLoading) return <div>loading...</div>;
+  //   <div>
+  //     {weatherData ? (
+  //       <div className="weather-data">
+  //         <div className="temp">
+  //           <h5>Temp °C</h5>
+  //           <h3>
+  //             {weatherData && weatherData.main
+  //               ? Math.round(weatherData.main.temp - 273.15)
+  //               : null}
+  //           </h3>
+  //         </div>
+  //         <div className="feels-like">
+  //           <h5>Feels Like °C</h5>
+  //           <h3>
+  //             {weatherData && weatherData.main
+  //               ? Math.round(weatherData.main.feels_like - 273.15)
+  //               : null}
+  //           </h3>
+  //         </div>
+
+  //         <div className="cloud">
+  //           <h5>Cloud %</h5>
+  //           <h3>
+  //             {weatherData && weatherData.clouds
+  //               ? weatherData.clouds.all
+  //               : null}
+  //           </h3>
+  //         </div>
+
+  //         <div className="rain">
+  //           <h5>Rain mm</h5>
+  //           <h3>
+  //             {weatherData && weatherData.rain ? weatherData.rain["1h"] : 0}
+  //           </h3>
+  //         </div>
+  //       </div>
+  //     ) : null}
+  //   </div>;
+  //   console.log(weatherData);
+  // }
+
+  // // AI prompted this:
+
+  // // AI also prompted this = rest of the component to handle loading, errors, and displaying data
+
+  // return (
+  //   <div>
+  //     <div className="searchbar">
+  //       <input
+  //         type="text"
+  //         value={city} // Connect input to the state
+  //         onChange={handleInputChange} // Listen for changes
+  //         placeholder="Enter City ..."
+  //       />
+  //       <button type="submit" onClick={() => backendCall(city)}>
+  //         Search
+  //       </button>
+  //     </div>
+  //     <div className="current-weather">
+  //       <h4>{city.toUpperCase()}</h4>
+  //     </div>
+  //   </div>
+  // );
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+  const [city, setCity] = useState<string>(""); // State to hold what the user types
+  const [searchCity, setSearchCity] = useState<string | null>(null);
 
   const {
     data: weatherData,
     error,
     isLoading,
   } = useSWR<WeatherData | null>(
-    city
-      ? `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=654bfe91a3b12d5b95bbb8bec98174ae`
+    searchCity
+      ? `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=654bfe91a3b12d5b95bbb8bec98174ae`
       : null,
     fetcher
   );
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
 
-  console.log(weatherData);
-
-  //Function to update the city state when the user types
+  // Function to handle input changes
   const handleInputChange = (event) => {
     setCity(event.target.value);
-  }; // re-reders after every letter entered
+  };
 
-  // AI prompted this:
+  // Function to handle the search button click
+  const handleSearchClick = () => {
+    setSearchCity(city);
+  };
 
-  // AI also prompted this = rest of the component to handle loading, errors, and displaying data
-
+  // Rest of your component remains mostly the same
   return (
     <div>
       <div className="searchbar">
@@ -77,52 +157,84 @@ function SearchBar() {
           onChange={handleInputChange} // Listen for changes
           placeholder="Enter City ..."
         />
-        <button type="submit">Search</button>
+        <button type="submit" onClick={handleSearchClick}>
+          Search
+        </button>
       </div>
+
       <div className="current-weather">
         <h4>{city.toUpperCase()}</h4>
-        <div className="weather-data">
-          <div className="temp">
-            <h5>Temp °C</h5>
-            <h3>
-              {weatherData && weatherData.main
-                ? Math.round(weatherData.main.temp - 273.15)
-                : null}
-            </h3>
-          </div>
-          <div className="feels-like">
-            <h5>Feels Like °C</h5>
-            <h3>
-              {weatherData && weatherData.main
-                ? Math.round(weatherData.main.feels_like - 273.15)
-                : null}
-            </h3>
-          </div>
+        <div>
+          {error && <div>Failed to load</div>}
+          {isLoading && <div>Loading...</div>}
+          {weatherData && (
+            <div className="weather-data">
+              <div className="temp">
+                <h5>Temp °C</h5>
+                <h3>{Math.round(weatherData.main.temp - 273.15)}</h3>
+              </div>
 
-          <div className="cloud">
-            <h5>Cloud %</h5>
-            <h3>
-              {weatherData && weatherData.clouds
-                ? weatherData.clouds.all
-                : null}
-            </h3>
-          </div>
+              <div className="feels-like">
+                <h5>Feels Like °C</h5>
+                <h3>{Math.round(weatherData.main.feels_like - 273.15)}</h3>
+              </div>
 
-          <div className="rain">
-            <h5>Rain mm</h5>
-            <h3>
-              {weatherData && weatherData.rain ? weatherData.rain["1h"] : 0}
-            </h3>
-          </div>
+              <div className="cloud">
+                <h5>Cloud %</h5>
+                <h3>
+                  {weatherData && weatherData.clouds
+                    ? weatherData.clouds.all
+                    : null}
+                </h3>
+              </div>
+
+              <div className="rain">
+                <h5>Rain mm</h5>
+                <h3>
+                  {weatherData && weatherData.rain ? weatherData.rain["1h"] : 0}
+                </h3>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
-//   return <div>hello {data.name}!</div>;
-
 export default SearchBar;
 
-//connect api - pull one location
-//useState to remember current location
+{
+  /* {weatherData && (
+            <div className="weather-data">
+
+              <div className="temp">
+                <h5>Temp °C</h5>
+                <h3>{Math.round(weatherData.main.temp - 273.15)}</h3>
+              </div>
+
+              <div className="feels-like">
+                <h5>Feels Like °C</h5>
+                <h3>{Math.round(weatherData.main.feels_like - 273.15)}</h3>
+              </div>
+
+              <div className="cloud">
+              <h5>Cloud %</h5>
+              <h3>
+              {weatherData && weatherData.clouds
+                ? weatherData.clouds.all
+                : null}
+              </h3>
+              </div>
+
+             <div className="rain">
+             <h5>Rain mm</h5>
+             <h3>
+               {weatherData && weatherData.rain ? weatherData.rain["1h"] : 0}
+             </h3>
+             </div>
+             )}
+
+
+
+//   return <div>hello {data.name}!</div>; */
+}

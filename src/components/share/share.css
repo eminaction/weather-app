@@ -1,12 +1,23 @@
-.share {
+.facebook h6 {
+  color: rgb(49, 49, 49);
+}
+.facebook {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
   background-color: rgba(255, 255, 255, 0.87);
   width: 150px;
   margin: 0 auto;
-  height: 30px;
+  height: 40px;
   border-radius: 10px;
   cursor: pointer;
 }
-.share h6 {
-  color: rgb(49, 49, 49);
-  padding-top: 8px;
+.social-share {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: -20px;
+}
+.share-title {
+  margin-top: -20px;
 }
