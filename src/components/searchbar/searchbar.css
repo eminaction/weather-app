@@ -23,14 +23,15 @@
 .searchbar button {
   float: right;
   height: 30px;
-  margin-right: 5px;
-  padding: 5px;
+  padding: 3px;
   font-size: 12px;
   color: white;
   background-color: rgb(49, 49, 49);
   border: 0px;
   border-radius: 10px;
   cursor: pointer;
+  position: fixed;
+  margin-left: -60px;
 }
 .current-weather {
   height: 200px;
